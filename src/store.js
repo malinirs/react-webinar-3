@@ -63,14 +63,17 @@ class Store {
    * Выделение записи по коду
    * @param code
    */
-  selectItem(code) {
+  selectItem(code, event) {
+    const isSelectMulti = event.ctrlKey || event.metaKey;
+
     this.setState({
       ...this.state,
       list: this.state.list.map(item => {
         if (item.code === code) {
-          item.selected = !item.selected;
-        }
-        return item;
+          return { ...item, selected: !item.selected }; // selected = !undefined = true
+        } else if (isSelectMulti) {
+          return item;
+        } return { ...item, selected: false }; // В остальных случаях сбрасываем выделение
       }),
     });
   }
