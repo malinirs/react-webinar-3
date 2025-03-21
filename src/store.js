@@ -5,6 +5,7 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
+    this.nextCode = Math.max(0, ...this.state.list.map(item => item.code)) + 1; // Выбирает max число наяиная с 0
   }
 
   /**
@@ -42,9 +43,16 @@ class Store {
    * Добавление новой записи
    */
   addItem() {
+    const newItem = {
+      code: this.nextCode,
+      title: 'Новая запись',
+    }
+
+    this.nextCode += 1;
+
     this.setState({
       ...this.state,
-      list: [...this.state.list, { code: this.state.list.length + 1, title: 'Новая запись' }],
+      list: [...this.state.list, newItem],
     });
   }
 
