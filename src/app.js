@@ -28,6 +28,7 @@ function App({ store }) {
               >
                 <div className="Item-code">{item.code}</div>
                 <div className="Item-title">{item.title}</div>
+                {item.selectedCount > 0 ? <div>Выделяли {item.selectedCount} раз</div> : null}
                 <div className="Item-actions">
                   <button onClick={(event) => { 
                     store.deleteItem(item.code),

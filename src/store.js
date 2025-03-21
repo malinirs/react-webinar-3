@@ -46,6 +46,7 @@ class Store {
     const newItem = {
       code: this.nextCode,
       title: 'Новая запись',
+      selectedCount: 0,
     }
 
     this.nextCode += 1;
@@ -78,7 +79,18 @@ class Store {
       ...this.state,
       list: this.state.list.map(item => {
         if (item.code === code) {
-          return { ...item, selected: !item.selected }; // selected = !undefined = true
+          if (!item.selected) { // Если текущий элемент выделяется
+            return { 
+              ...item, 
+              selected: true,
+              selectedCount: (item.selectedCount || 0) + 1,
+            };
+          } else { // Если текущий элемент снимается с выделения
+            return {
+              ...item,
+              selected: false,
+            };
+          }
         } else if (isSelectMulti) {
           return item;
         } return { ...item, selected: false }; // В остальных случаях сбрасываем выделение
